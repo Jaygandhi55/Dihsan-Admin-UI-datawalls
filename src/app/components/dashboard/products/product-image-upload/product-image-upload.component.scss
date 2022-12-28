@@ -1,0 +1,113 @@
+.change-pass{
+    width: 10rem;
+}
+::ng-deep {
+    .role-drop.ng-select .ng-select-container{
+        border: 1px solid #92929d !important;
+        border-radius: 5px;
+    }
+    @media(min-width: 992px) {
+        .modal-lg.image-modal {
+            max-width: 60rem;
+        }
+    }
+    .cdk-overlay-container, tr.gu-mirror {
+        z-index: 999999999 !important;
+    }
+
+    tr.gu-mirror td{
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    tr.gu-mirror td img {
+        height: 10rem !important;
+        width: auto !important;
+    }
+
+    tr.gu-mirror td.order{
+        min-width: 8rem;
+    }
+}
+.modal-body .dataTable {
+    margin: 0px auto;
+}
+
+.dataTable td, .dataTable th {
+    text-align: center; 
+    vertical-align: middle;
+}
+
+tbody tr:nth-of-type(even){
+    background-color: #efeff4;
+}
+
+tbody tr:hover, tbody tr:nth-of-type(even):hover {
+    background-color: #d2d2d7;
+}
+
+tbody tr.first-row:hover { 
+    background-color: #f9f9fb; 
+}
+
+.table-bordered th, .table-bordered td{
+    border: 1px solid;
+}
+table, th, td {
+    border: 1px solid #c5c5cd94;
+}
+table .submit-user{
+    width: 6rem;
+    margin-left: 0.8rem;
+}
+table td img {
+    height: 10rem;
+    width: auto;
+}
+.action-icon i {
+    font-size: 14px;
+}
+.download-image{
+    float: right;
+    margin-top: 1rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.download-all{
+    float: right;
+}
+
+td .file-image-1{
+    width: auto;
+    height: auto;
+    margin: 0;
+}
+
+.lock-unlock{
+    margin-right: 1rem;
+}
+
+// .div-image img {
+//     -webkit-transition: all 1s ease; /* Safari and Chrome */
+//     -moz-transition: all 1s ease; /* Firefox */
+//     -ms-transition: all 1s ease; /* IE 9 */
+//     -o-transition: all 1s ease; /* Opera */
+//     transition: all 1s ease;
+// }
+
+// .div-image:hover img {
+//     -webkit-transform:scale(2); /* Safari and Chrome */
+//     -moz-transform:scale(2); /* Firefox */
+//     -ms-transform:scale(2); /* IE 9 */
+//     -o-transform:scale(2); /* Opera */
+//      transform:scale(2);
+// }

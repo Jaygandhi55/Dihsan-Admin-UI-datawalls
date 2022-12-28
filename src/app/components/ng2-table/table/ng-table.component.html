@@ -1,0 +1,102 @@
+<table class="table dataTable" ngClass="{{config.className || ''}}" role="grid" style="width: auto;">
+  <thead>
+    <tr role="row">
+      <th *ngIf="selectable" class="checkbox-select">
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <th *ngFor="let column of columns" [ngTableSorting]="config" [column]="column"
+        (sortChanged)="onChangeTable($event)" ngClass="{{column.className || ''}}">
+        {{column.title}}
+        <i *ngIf="config && column.sort" class="pull-right fa"
+          [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"></i>
+      </th>
+      <th *ngIf="actionHtml && actionHtml.length">
+        Action
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="showFilterRow" [class.first-row]="showFilterRow">
+      <td *ngIf="selectable" class="checkbox-select"></td>
+      <td *ngFor="let column of columns">
+        <input #filterText *ngIf="column.filtering && column.filtering.type == 'text'"
+          placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" class="form-control"
+          style="width: auto;" id="{{column.name}}" (input)="changeSearch($event)" />
+
+        <ng-select #filterSelect
+          *ngIf="column.filtering && column.filtering.type == 'drop' && column.filtering.list?.length > 0"
+          placeholder="Filter {{column.title}}" dropdownPosition="bottom" id="{{column.name}}" class="role-drop"
+          (change)="changeOption($event)" [multiple]="column?.filtering?.multiSelect">
+          <ng-option *ngFor="let option of column.filtering.list" value="{{option.id}}">{{option.text}}</ng-option>
+        </ng-select>
+
+      </td>
+    </tr>
+    <tr *ngFor="let row of rows; let i = index" [class.media-highlight]="row.is_media_locked == false"
+      [class.content-highlight]="row.is_content_locked == false">
+      <td *ngIf="selectable" class="checkbox-select">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+      <td (click)="cellClick(row, column.name)" *ngFor="let column of columns; let i= index"
+        [class.text-align-right]="column.title === 'Category Name'">
+
+        <span *ngIf="column.name === 'keywords' && row['body']" triggers="click" [ngbTooltip]="row['body']"
+          class="side-menu__icon action-icon"><i class="fe fe-clipboard"></i><br></span>
+
+        <span *ngIf="column.name === 'special_price'" class="maximum-price">{{row['maxPrice'] | currency:
+          row['currency']}}<br></span>
+        <span *ngIf="column.name === 'special_price'">{{row['special_price'] | currency: row['currency']}}</span>
+
+        <span *ngIf="column.title === 'Category Name'" class="level{{row.level}}"
+          [innerHtml]="sanitize(getData(row, column.name))">{{row['special_price'] | currency: row['currency']}}</span>
+        <span *ngIf="column.name === 'sample_image' && row[column.name]">
+          <span class="product-image">
+            <img [src]="getData(row, column.name)" />
+          </span>
+        </span>
+
+      <span *ngIf="column.name === 'product_status'" class="product_status"><span class="product_status-stats"
+        [class.red-back]="row.product_status == 'draft'" [class.yellow-back]="row.product_status == 'in_review'"
+        [class.blue-back]="row.product_status == 'live_ready'" [class.green-back]="row.product_status == 'live'">
+        <i *ngIf="row.product_status == 'draft'" class="fa fa-edit"></i>
+        <i *ngIf="row.product_status == 'in_review'" class="fas fa-eye"></i>
+        <i *ngIf="row.product_status == 'live_ready'" class="fa fa-rocket"></i>
+        <i *ngIf="row.product_status == 'live'" class="fa fa-check"></i>
+        {{' ' + replaceLineBreak(row.product_status)}}
+        </span>
+        <span class="product-status-button" *ngIf="column.name === 'product_status'">
+          <button class="btn btn-warning" (click)="actionClick(row, 'in_review')" *ngIf="row.product_status == 'draft'">Ready for Review</button>
+          <button class="btn btn-info" (click)="actionClick(row, 'live_ready')" *ngIf="row.product_status == 'in_review'">Ready to go Live</button>
+          <button class="btn btn-primary" (click)="actionClick(row, 'draft')" *ngIf="row.product_status == 'live_ready'">Back to Draft</button>
+          <button class="btn btn-secondary" (click)="actionClick(row, 'draft')" *ngIf="row.product_status == 'live'">Back to Draft</button>
+        </span>
+      </span>
+
+        <span
+          *ngIf="column.name !== 'special_price' && column.title !== 'Category Name' && column.name !== 'sample_image' && column.name !== 'product_status'"
+          >
+        {{getData(row, column.name)}}</span>
+          <!-- [innerHtml]="sanitize(getData(row, column.name))" -->
+        
+      </td>
+      <td *ngIf="actionHtml?.length">
+        <button ngbTooltip="{{data.title}}" class="{{data.parentClass}}" *ngFor="let data of actionHtml"
+          (click)="actionClick(row, data.title)" type="button" class="side-menu__icon action-icon button-icon">
+          <i *ngIf="data.title != 'Activate/Deactivate User'" class="{{data.class}}"></i>
+          <i *ngIf="data.title == 'Activate/Deactivate User'"
+            class="{{row.is_active ? 'ion ion-ios-checkmark-circle success' : 'ion ion-ios-close-circle error'}}"></i>
+        </button>
+      </td>
+
+    </tr>
+    <tr *ngIf="rows?.length == 0">
+      <td class="dataTables_empty" [attr.colspan]="columns.length + (actionHtml && actionHtml.length ? 1 : 0)">
+        <label>No Data Available</label>
+      </td>
+    </tr>
+  </tbody>
+</table>

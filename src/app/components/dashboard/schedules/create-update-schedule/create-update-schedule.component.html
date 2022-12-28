@@ -1,0 +1,84 @@
+<form [formGroup]="scheduleForm">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Endpoint<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Endpoint" formControlName="endpoint" (change)="changeEndpoint($event)">
+                    <ng-option *ngFor="let option of endpointList" value="{{option?.id}}">{{option?.endpoint}}</ng-option>
+                </ng-select>
+                
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>API Type<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select API Type" formControlName="apiType" (change)="changeAPIType($event)">
+                    <ng-option *ngFor="let option of apiTypeList" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Resource<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Resource" formControlName="resource" (change)="changeResource($event)">
+                    <ng-option *ngFor="let option of resourceList" value="{{option?.id}}">{{option?.resource}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="scheduleForm.controls['resource'].touched && scheduleForm.controls['resource'].errors?.['required']">
+                    Select Resource.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Duration<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" autocomplete="off" placeholder="Enter Duration" type="text"
+                formControlName="duration"  placeholder="Enter your first name">
+                <span class="tx-danger" *ngIf="scheduleForm.controls['duration'].touched && scheduleForm.controls['duration'].errors?.['required']">
+                    Enter Duration.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Unit<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Unit" formControlName="unit">
+                    <ng-option *ngFor="let option of unitList" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="scheduleForm.controls['unit'].touched && scheduleForm.controls['unit'].errors?.['required']">
+                    Select Unit.
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" (click)="createUpdateSchedule()"
+        [disabled]="scheduleForm.invalid"
+        class="btn btn-primary">{{submitBtnName}}</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

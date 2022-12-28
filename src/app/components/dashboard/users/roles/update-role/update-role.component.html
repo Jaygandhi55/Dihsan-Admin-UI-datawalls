@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row mt-3">
+        <h3>{{data?.role?.name}}</h3>
+
+    </div>
+    <div class="checkbox-list">
+        <app-checkbox *ngFor="let control of tabs" [class.sub-tab]="control.subTab" [control]="control" #checkboxComp></app-checkbox>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="submit" [disabled]="" class="btn btn-primary submit-user" (click)="updateAccess()"
+        [class.update-access-rights]="submitBtnName == 'Update Access Rights'">{{submitBtnName}}</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

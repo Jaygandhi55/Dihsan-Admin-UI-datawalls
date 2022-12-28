@@ -1,0 +1,101 @@
+<form [formGroup]="userForm">
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mt-3" *ngIf="actionName !== 'change_pass'">
+        <div class="col-md-3">
+            <label>First Name<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-8">
+            <input class="form-control" autocomplete="off" placeholder="Enter your first name" type="text"
+            formControlName="firstName"  placeholder="Enter your first name">
+            <span class="tx-danger" *ngIf="userForm.controls['firstName'].touched && userForm.controls['firstName'].errors?.['required']">
+                Enter First Name.
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="actionName !== 'change_pass'">
+        <div class="col-md-3">
+            <label>Last Name<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-8">
+            <input class="form-control" autocomplete="off" placeholder="Enter your last name" type="text"
+            formControlName="lastName" placeholder="Enter your last name">
+            <span class="tx-danger" *ngIf="userForm.controls['lastName'].touched && userForm.controls['lastName'].errors?.['required']">
+                Enter Last Name.
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="actionName !== 'change_pass'">
+        <div class="col-md-3">
+            <label>Email<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-8">
+            <input class="form-control" autocomplete="off" placeholder="Enter your email" type="text"
+            formControlName="email"placeholder="Enter your email">
+            <span class="tx-danger" *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors?.['required']">
+                Email field is required.
+            </span>
+            <span class="tx-danger" *ngIf="userForm.controls['email'].touched && userForm.controls['email'].errors?.['email']">
+                Enter valid Email.
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="actionName !== 'change_pass'">
+        <div class="col-md-3">
+            <label>Role<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-6">
+            <ng-select id="role" class="role-drop" placeholder="Select Role" formControlName="role" (change)="changeRole($event)">
+                <ng-option *ngFor="let option of userService?.roleList" value="{{option?.id}}">{{option?.name}}</ng-option>
+            </ng-select>
+            <span class="tx-danger" *ngIf="userForm.controls['role'].touched && userForm.controls['role'].errors?.['required']">
+                Enter Role.
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="actionName !== 'update_user'">
+        <div class="col-md-3">
+            <label>Password<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-8">
+            <input class="form-control" autocomplete="off" placeholder="Enter password" type="password"
+            formControlName="password" placeholder="Enter your password">
+            <span class="tx-danger" *ngIf="userForm.controls['password'].touched && userForm.controls['password'].errors?.['required']">
+                Enter Password.
+            </span>
+        </div>
+    </div>
+
+    <div class="row mt-3 mb-3" *ngIf="actionName !== 'update_user'">
+        <div class="col-md-3">
+            <label>Confirm Password<span class="tx-danger">*</span></label>
+        </div>
+        <div class="col-md-8">
+            <input class="form-control" autocomplete="off" placeholder="Enter confirm password" type="password"
+            formControlName="confirmPassword" placeholder="Enter your confirm password">
+            <span class="tx-danger" *ngIf="userForm.controls['confirmPassword'].touched && userForm.controls['confirmPassword'].errors?.['required']">
+                Enter Confirm Password.
+            </span>
+            <div class="tx-danger" *ngIf="userForm.controls['confirmPassword'].touched && userForm.value.password !== userForm.value.confirmPassword">
+                Password is not matching.
+            </div>
+        </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" [disabled]="userForm.invalid || userForm.value.password !== userForm.value.confirmPassword" (click)="createUpdateUser()" class="btn btn-primary" [class.change-pass]="submitBtnName == 'Change Password'">{{submitBtnName}}</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body" *ngIf="actionName !== 'product_detail'">
+    <div class="row mt-2 mb-3">
+        <div class="col-md-3">
+            <label>Product Name:</label>
+        </div>
+        <div class="col-md-8">
+            <label>{{text}}</label>
+        </div>
+    </div>
+    <table class="table dataTable"
+           role="grid" style="width: 70% !important;">
+      <thead>
+        <tr role="row">
+          <th>Country Code</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of size">
+            <td>{{row.size?.country_code}}</td>
+            <td>{{row.size?.value}} {{row.size?.unit}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+
+<div class="modal-body" *ngIf="actionName == 'product_detail' && list[0]?.is_content_locked">
+    <div class="row mt-2 mb-3" style="margin-right: 1rem;">
+      <button type="button" (mouseover)="changeIcon=true" (mouseout)="changeIcon=false" ngbTooltip="Unlock Content" class="btn btn-primary-light download-all" (click)="lockContent()">
+        <i class="{{changeIcon ? 'fa fa-unlock' : 'fa fa-lock'}}"></i>
+      </button>
+    </div>
+    <table class="table dataTable"
+           role="grid" style="width: 90% !important;">
+      <thead>
+        <tr role="row">
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of fields">
+            <td>{{row.field}}</td>
+            <td [innerHtml]="sanitize(row.value)">{{row.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+
+<div class="modal-body" *ngIf="actionName == 'product_detail' && !list[0]?.is_content_locked">
+  <div class="mt-2 mb-3">
+    <h3>This Product is Unlocked by {{list[0]?.content_unlocked_by.first_name}} {{list[0]?.content_unlocked_by.last_name}}</h3>
+  </div>
+</div>
+
+
+<div class="modal-footer">
+    <!-- <button type="submit"
+        [disabled]="resourceForm.invalid || headers?.text == '' || isJsonString(headers?.text) === false ||
+        attributes?.text == '' || isJsonString(attributes?.text) === false ||
+        body?.text == '' || isJsonString(body?.text) === false"
+        (click)="createUpdateResource()"
+        class="page-link submit-user">{{submitBtnName}}</button> -->
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>

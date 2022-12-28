@@ -1,0 +1,25 @@
+<app-page-header [title]="'Project Configuration'" [items]="['Settings']" [active_item]="'Project Configuration'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <ace-editor [mode]="'json'" [theme]="'eclipse'" #dihsanField style="height:15rem;width: 30rem;border: 1px solid;"></ace-editor>
+                </div>
+            </div>
+
+            <div class="row mt-5 mb-5">
+                <div class="col-md-4">
+                    <button type="button" (click)="updateField()"
+                    class="btn btn-primary side-menu__icon action-icon button-icon">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

@@ -1,0 +1,103 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body" *ngIf="((list[0]?.media_unlocked_by == null && list[0]?.is_media_locked) || list[0]?.media_unlocked_by?.id === userDetail?.id || userDetail?.role?.name === roles.ROLE_ADMIN);else lockedBy">
+    <form [formGroup]="imageForm" gallerize>
+        <div class="">
+            <button type="button" *ngIf="list[0]?.status !== 'live' && list[0]?.status !== 'live_ready'" ngbTooltip="{{!list[0]?.is_media_locked ? ' Lock Media' : ' Unlock Media'}}" (mouseover)="changeIcon=true" (mouseout)="changeIcon=false" class="btn btn-primary-light download-all" (click)="lockkUnlock()">
+                <i *ngIf="list[0]?.is_media_locked" class="{{changeIcon ? 'fa fa-unlock' : 'fa fa-lock'}}"></i>
+                <i *ngIf="!list[0]?.is_media_locked" class="{{changeIcon ? 'fa fa-lock' : 'fa fa-unlock'}}"></i>
+            </button>
+            <button type="button" class="btn btn-primary-light download-all lock-unlock" (click)="downloadAll()"><i class="fa fa-download"></i> Download All</button>
+        </div>
+        <div class="row mt-3" style="clear: both;">
+            <table class="table dataTable mt-3" formArrayName="field" role="grid" style="width: 90% !important;">
+                <thead>
+                    <tr role="row">
+                        <th class="d-none">id</th>
+                        <th>Order</th>
+                        <th>Original Image</th>
+                        <th>Final Image</th>
+                        <th>Alt Text</th>
+                        <th>File Name</th>
+                        
+                        <th *ngIf="!list[0]?.is_media_locked">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="image-row" [dragula]="'IMAGESDRAG'" [dragulaModel]="pageList" (dragulaModelChange)="changeOrder($event)" style="cursor: pointer;">
+                    <tr role="row" *ngFor="let field of fields().controls; let i=index" disabled [formGroupName]="i">
+                        <td class="d-none">{{images[i].id}}</td>
+                        <td class="order">{{i + 1}}</td>
+                        <td style="min-width: 8rem;">
+                                    <div class="file-image-1">
+                                    <div class="product-image">
+                                        <img *ngIf="images[i] && images[i]?.image_url"
+                                        [src]="images[i]?.image_url" class="br-5" alt="" previewFullscreen="true">
+                                        
+                                        <ul class="icons">
+    
+                                          <li><a href="javascript:void(0);" class="bg-secondary" *ngIf="images[i] && images[i]?.image_url" ngbTooltip="Download"
+                                            (click)="downloadImage(images[i].image_url)" ><i class="fe fe-download"></i></a></li>
+                                          
+                                        </ul>
+                                      </div>
+                                    </div>
+
+                        </td>
+                        <td style="min-width: 8rem;">
+                            <div class="div-image" *ngIf="field.disabled"><img
+                                    *ngIf="images[i] && images[i]?.updated_image" [src]="images[i]?.updated_image" previewFullscreen="true" />
+                            </div>
+                            <app-file-upload *ngIf="!field.disabled" #fileUpload [disable]="field.disabled">
+                            </app-file-upload>
+
+                        </td>
+                        <td><textarea class="form-control" formControlName="altText" cols="100"></textarea></td>
+                        <td><input class="form-control" formControlName="fileName" /></td>
+                        
+                        <td style="width: 11rem;" *ngIf="!list[0]?.is_media_locked">
+                            <button ngbTooltip="Edit" *ngIf="field.disabled" (click)="editImageDetails(field)"
+                                type="button" class="btn btn-outline-success side-menu__icon action-icon button-icon"><i
+                                    class="fe fe-edit"></i></button>
+
+                            <button ngbTooltip="Submit" *ngIf="!field.disabled"
+                                (click)="(field.valid) && submitImageDetails(field, i)"
+                                type="button" class="btn btn-success-light side-menu__icon action-icon button-icon"><i
+                                    class="fe fe-send"></i></button>
+
+                            <button ngbTooltip="Delete" *ngIf="!field.disabled" (click)="deleteImageField(i)"
+                                type="button" class="btn btn-danger-light side-menu__icon action-icon button-icon"><i
+                                    class="fe fe-trash-2"></i></button>
+
+                            <button ngbTooltip="Cancel" *ngIf="!field.disabled" (click)="cancelField(field)"
+                                type="button" class="btn btn-warning-light side-menu__icon action-icon button-icon"><i
+                                    class="fe fe-x"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <button type="submit" *ngIf="!list[0]?.is_media_locked" (click)="addField()" class="btn btn-primary mt-3 mb-3 submit-user">Add New</button>
+            </table>
+        </div>
+    </form>
+</div>
+<ng-template #lockedBy>
+<div class="modal-body">
+    <div class="row mt-3">
+        <h3>This Product is Unlocked by {{list[0]?.media_unlocked_by.first_name}} {{list[0]?.media_unlocked_by.last_name}}</h3>
+    </div>
+</div>
+</ng-template>
+<div class="modal-footer">
+    <!-- <button type="submit"
+        [disabled]="resourceForm.invalid || headers?.text == '' || isJsonString(headers?.text) === false ||
+        attributes?.text == '' || isJsonString(attributes?.text) === false ||
+        body?.text == '' || isJsonString(body?.text) === false"
+        (click)="createUpdateResource()"
+        class="page-link submit-user">{{submitBtnName}}</button> -->
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

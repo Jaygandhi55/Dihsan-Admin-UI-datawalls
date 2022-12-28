@@ -1,0 +1,30 @@
+<app-page-header [title]="'All Products'" [items]="['Products']" [active_item]="'All Products'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'All Product List'}}</h4>
+            </div>
+            <div *ngIf="data && userDetails.role.name !== roles.ROLE_MEDIA_TEAM && userDetails.role.name !== roles.ROLE_DATA_TEAM"
+                class="mg-r-15">
+                <button (click)="syncAll()" type="button" class="btn btn-primary action-icon-button button-icon"><i
+                        class="fa fa-sync"></i> Sync
+                    All</button>
+                <button (click)="assign()" type="button" class="btn btn-warning action-icon-button button-icon"
+                    [disabled]="tableData?.ngTable?.selection?.selected.length == 0 && isEmptyObject(params)"><i
+                    class="fa fa-user"></i> Assign
+                    to...</button>
+                <button (click)="downloadAllImage()" type="button" class="btn btn-info action-icon-button button-icon"
+                    [disabled]="tableData?.ngTable?.selection?.selected.length == 0 && isEmptyObject(params)"><i
+                    class="fa fa-download"></i> Download All Images</button>
+            </div>
+            <app-table-data *ngIf="data" [pageTitle]="'All Product List'" [syncAllBtn]="access?.write"
+                [columns]="columns" (actionEvent)="actionEvent($event)" (filterEvt)="getFilterData($event)"
+                [page]="page" (pageEvent)="pageChange($event)" (searchEvt)="commonSearch($event)"
+                [pagination_data]="pagination_data" [actionHtml]="actionHtml" [selectable]="true" [showFilter]="true"
+                [data]="data" #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="spinner"></app-loader>

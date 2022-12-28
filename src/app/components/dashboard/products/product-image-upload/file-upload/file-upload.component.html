@@ -1,0 +1,17 @@
+<!-- <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+    [uploader]="uploader" class="well my-drop-zone p-2 mb-3">
+    <input type="file" class="file-select" ng2FileSelect [uploader]="uploader" />
+    <div><strong>{{ uploader.queue[uploader.queue.length - 1]?.file?.name }}</strong></div>
+</div> -->
+
+<ngx-dropzone [multiple]="false" (change)="onPreviewFileSelect($event)" [disabled]="disable">
+    <ngx-dropzone-label>
+      <div>
+        <h6>Upload Image</h6>
+      </div>
+    </ngx-dropzone-label>
+    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesPreview" [file]="f"
+      [removable]="true" (removed)="onPreviewFileRemove(f)">
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-image-preview>
+  </ngx-dropzone>

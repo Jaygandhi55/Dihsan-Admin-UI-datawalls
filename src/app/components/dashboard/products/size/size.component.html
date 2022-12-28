@@ -1,0 +1,16 @@
+<app-page-header [title]="'Size'" [items]="['Products']" [active_item]="'Size'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'Size List'}}</h4>
+            </div>
+            <app-table-data *ngIf="data?.length != 0" [pageTitle]="'Size List'" [columns]="columns"
+                (actionEvent)="actionEvent($event)" [page]="page" (pageEvent)="pageChange($event)"
+                [pagination_data]="pagination_data" [actionHtml]="actionHtml" [showFilter]="true" [data]="data"
+                #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="spinner"></app-loader>

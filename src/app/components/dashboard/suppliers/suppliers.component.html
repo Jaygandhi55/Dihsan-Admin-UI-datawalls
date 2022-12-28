@@ -1,0 +1,21 @@
+<app-page-header [title]="'Suppliers'" [items]="['Dashboard']" [active_item]="'Suppliers'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'Suppliers List'}}</h4>
+            </div>
+            <div *ngIf="data" class="mg-r-15">
+                <button (click)="createSupplier()" type="button"
+                    class="btn btn-primary action-icon-button button-icon">Create Supplier</button>
+            </div>
+            <app-table-data *ngIf="data" [pageTitle]="'Suppliers List'" [createSupplierBtn]="access?.write"
+                [columns]="columns" [page]="page" (pageEvent)="pageChange($event)" [pagination_data]="pagination_data"
+                (actionEvent)="actionEvent($event)" [actionHtml]="actionHtml" [showFilter]="true" [data]="data"
+                #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

@@ -1,0 +1,5 @@
+<app-page-header [title]="'Sub Categories'" [items]="['Products']" [active_item]="'Sub Categories'"></app-page-header>
+<app-table-data *ngIf="data?.length != 0" [pageTitle]="'Sub Category List'" [columns]="columns"
+(actionEvent)="actionEvent($event)" [page]="page" (pageEvent)="pageChange($event)" [pagination_data]="pagination_data" [actionHtml]="actionHtml" [showFilter]="true" [data]="data" #tableData></app-table-data>
+
+<app-loader *ngIf="spinner"></app-loader>

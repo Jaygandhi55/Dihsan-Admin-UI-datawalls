@@ -1,0 +1,173 @@
+<form [formGroup]="filedForm">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label>Category:</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{list[0]?.name}}</label>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col-md-3">
+                <label>Level:</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{list[0]?.level}}</label>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label>Path:</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{list[0]?.path.name.join(' -> ')}}</label>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col-md-3">
+                <label>Website Id<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" autocomplete="off" type="text"
+                formControlName="websiteId"  placeholder="Enter Website Id">
+                <span class="tx-danger" *ngIf="filedForm?.controls['websiteId'].touched && filedForm?.controls['websiteId'].errors?.['required']">
+                    Enter Website Id.
+                </span>
+            </div>
+        </div>
+        <table class="table dataTable mt-3" formArrayName="field" role="grid" style="width: 100% !important;">
+            <thead>
+                <tr role="row">
+                    <th class="d-none">ID</th>
+                    <th>Change Order</th>
+                    <th>Dihsan Field</th>
+                    <th>Website Field</th>
+                    <th>Meta</th>
+                    <th>Field Type</th>
+                    <th>Is Mandatory</th>
+                    <th>Action</th>
+                    <th class="d-none">Order</th>
+                </tr>
+            </thead>
+            <tbody [dragula]="'MAPPINGDRAG'">
+                <tr role="row" *ngFor="let quantity of fields().controls; let i=index" [formGroupName]="i">
+                    <td class="d-none"><input type="text" class="form-control" formControlName="categoryId" /></td>
+                    <td>
+                        <span class="side-menu__icon"><i class="fe fe-layers"></i></span>
+                    </td>
+                    <td>
+                        <ng-select id="content-type" class="role-drop" placeholder="Select Dihsan Field" formControlName="dihsan_field">
+                            <ng-option *ngFor="let option of dihsanFields" value="{{option}}">{{option}}</ng-option>
+                        </ng-select>
+                    </td>
+                    <td><input type="text" class="form-control" formControlName="meta_field" /></td>
+                    <td><input type="checkbox" formControlName="is_meta" /></td>
+                    <td>
+                        <ng-select id="content-type" class="role-drop" placeholder="Select Field Type" formControlName="field_data_type">
+                            <ng-option *ngFor="let option of fieldTypeList" value="{{option}}">{{option}}</ng-option>
+                        </ng-select>
+                    </td>
+                    <td><label class="ckbox mg-b-10"><input type="checkbox" class="" formControlName="field_mandatory" /><span class=" ml-2 custom-control-label"></span></label></td>
+                    <td><button type="button" (click)="removeField(i)" class="close float-none fe fe-x" aria-label="Close">
+                    </button></td>
+                    <td class="d-none"><input type="text" class="form-control" formControlName="order" /></td>
+                </tr>
+            </tbody>
+            <button type="submit" (click)="addField()" class="page-link submit-user mt-3 mb-3">Add Field</button>
+        </table>
+        
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="page-link submit-user"
+        [disabled]="filedForm?.invalid || filedForm?.value.field?.length == 0" (click)="updateField()">{{submitBtnName}}</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+
+<form *ngIf="actionName == 'show_field'">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label>Supplier:</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{supplier}}</label>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col-md-3">
+                <label>Resource:</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{resource}}</label>
+            </div>
+        </div>
+        <table class="table dataTable mt-3" role="grid" style="width: 90% !important;">
+            <thead>
+                <tr role="row">
+                    <th>Dihsan Field</th>
+                    <th>Supplier Filed</th>
+                    <th>meta Filed</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr role="row" *ngFor="let option of showFields; let i=index">
+                    <td>{{option?.dihsan_field}}</td>
+                    <td>{{option?.supplier_field}}</td>
+                    <td>{{option?.meta_field ? option?.meta_field : ''}}</td>
+                </tr>
+                <label *ngIf="!showFields?.length">No data Available</label>
+            </tbody>
+        </table>
+        
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<form *ngIf="actionName == 'sample_response'">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <label>Response:</label>
+            </div>
+            <div class="col-md-8">
+                <ace-editor [mode]="'json'" [readOnly]="true" [theme]="'eclipse'" #response style="height:300px;border: 1px solid;"></ace-editor>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

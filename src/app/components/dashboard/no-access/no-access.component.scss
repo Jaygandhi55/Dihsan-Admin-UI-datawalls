@@ -1,0 +1,36 @@
+::ng-deep {
+    .pagination-sm .page-link{
+        min-width: 5rem;
+    }
+    input.main-filter.form-control, pagination{
+        margin-left: 1.4rem;
+    }
+    .address{
+        width: 10rem;
+    }
+    .user-table tbody tr:hover {
+        background-color: #d2d2d7;
+    }
+
+    .action-icon{
+        padding: 0 0.5rem;
+        cursor: pointer;
+    }
+    .action-icon i {
+        font-size: 12px;
+    }
+}
+
+.card{
+    height: 25rem;
+}
+.card .no-access {
+    margin-top: 8rem;
+    margin-left: 18rem;
+}
+.card .no-access .create-user{
+    min-width: 10rem;
+    float: left;
+    background-color: #38cab3;
+    color: #fff;
+}

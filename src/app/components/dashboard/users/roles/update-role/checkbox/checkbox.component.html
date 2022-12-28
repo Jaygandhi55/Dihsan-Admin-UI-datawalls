@@ -1,0 +1,15 @@
+<form [formGroup]="roleAccessForm">   
+        <div class="row mt-3">
+            <div class="col-md-5">
+                <label>{{control?.name}}:</label>
+            </div>
+            <div class="col-md-3">
+                <label class="ckbox mg-b-10"><input type="checkbox" (change)="changeRead($event)"
+                    formControlName="read"><span class="ml-2 custom-control-label">Read</span></label>
+            </div>
+            <div class="col-md-3">
+                <label class="ckbox mg-b-10"><input type="checkbox" (change)="changeWrite($event)"
+                    formControlName="write"><span class=" ml-2 custom-control-label">write</span></label>
+            </div>
+        </div>
+</form>

@@ -1,0 +1,115 @@
+<app-page-header [title]="'Default Tables'" [items]="['Tables']" [active_item]="'Default Tables'"></app-page-header>
+<!-- Row -->
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Basic Table</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of DefaultTableData">
+                            <th scope="row">{{data.id}}</th>
+                            <td>{{data.name}}</td>
+                            <td>{{data.position}}</td>
+                            <td>{{data.salary}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- table-responsive -->
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Striped Rows</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped card-table table-vcenter text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of DefaultTableData">
+                                <th scope="row">{{data.id}}</th>
+                                <td>{{data.name}}</td>
+                                <td>{{data.position}}</td>
+                                <td>{{data.salary}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- bd -->
+            </div><!-- bd -->
+        </div><!-- bd -->
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Bordered Table</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered card-table table-vcenter text-nowrap">
+                        <thead>
+                            <tr class="border-top">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of DefaultTableData">
+                                <th scope="row">{{data.id}}</th>
+                                <td>{{data.name}}</td>
+                                <td>{{data.position}}</td>
+                                <td>{{data.salary}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Hoverable Rows Table</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover card-table table-vcenter text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of DefaultTableData2">
+                                <th scope="row">{{data.id}}</th>
+                                <td>{{data.name}}</td>
+                                <td>{{data.position}}</td>
+                                <td>{{data.salary}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Row -->

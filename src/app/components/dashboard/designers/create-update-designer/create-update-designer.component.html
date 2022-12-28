@@ -1,0 +1,47 @@
+<form [formGroup]="designerForm">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Designer Name<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" autocomplete="off" type="text"
+                formControlName="designerName"  placeholder="Enter Supplier Name">
+                <span class="tx-danger" *ngIf="designerForm.controls['designerName'].touched && designerForm.controls['designerName'].errors?.['required']">
+                    Enter Designer Name.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Website Id<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" autocomplete="off" type="text"
+                formControlName="websiteId"  placeholder="Enter Website Id">
+                <span class="tx-danger" *ngIf="designerForm.controls['websiteId'].touched && designerForm.controls['websiteId'].errors?.['required']">
+                    Enter Website Id.
+                </span>
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="modal-footer">
+        <button type="submit"
+        [disabled]="designerForm?.invalid"
+        (click)="createUpdateDesigner()"
+        class="btn btn-primary">{{submitBtnName}}</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

@@ -1,0 +1,21 @@
+<app-page-header [title]="'Resources'" [items]="['API Configurations']" [active_item]="'Resource'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'Resource List'}}</h4>
+            </div>
+            <div *ngIf="data" class="mg-r-15">
+                <button (click)="createResource()" type="button"
+                    class="btn btn-primary action-icon-button button-icon">Create Resource</button>
+            </div>
+            <app-table-data *ngIf="data" [pageTitle]="'Resource List'" [createResourceBtn]="access?.write"
+                [columns]="columns" [page]="page" (pageEvent)="pageChange($event)" [pagination_data]="pagination_data"
+                (actionEvent)="actionEvent($event)" [actionHtml]="actionHtml" [showFilter]="true" [data]="data"
+                #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

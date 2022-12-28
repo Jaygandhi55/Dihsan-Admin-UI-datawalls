@@ -1,0 +1,16 @@
+.submit-user{
+    width: 10rem;
+    color: #f9f9fb;
+    text-decoration: none;
+    background-color: #38cab3;
+    color: #fff;
+}
+.change-pass{
+    width: 10rem;
+}
+::ng-deep {
+    .role-drop.ng-select .ng-select-container{
+        border: 1px solid #92929d !important;
+        border-radius: 5px;
+    }
+}

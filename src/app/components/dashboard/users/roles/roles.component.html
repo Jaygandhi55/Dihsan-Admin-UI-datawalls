@@ -1,0 +1,16 @@
+<app-page-header [title]="'Roles'" [items]="['Users']" [active_item]="'Roles'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'Roles List'}}</h4>
+            </div>
+            <app-table-data *ngIf="data" [pageTitle]="'Roles List'" [columns]="columns" [page]="page"
+                (pageEvent)="pageChange($event)" [pagination_data]="pagination_data" (actionEvent)="actionEvent($event)"
+                [actionHtml]="actionHtml" [showFilter]="false" [data]="data" #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

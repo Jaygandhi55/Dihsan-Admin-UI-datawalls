@@ -1,0 +1,71 @@
+.submit-user{
+    width: 8rem;
+    color: #f9f9fb;
+    text-decoration: none;
+    background-color: #38cab3;
+    color: #fff;
+}
+.change-pass{
+    width: 10rem;
+}
+::ng-deep {
+    .role-drop.ng-select .ng-select-container{
+        border: 1px solid #92929d !important;
+        border-radius: 5px;
+    }
+    @media(min-width: 992px) {
+        .modal-lg.category-mapping {
+            max-width: 70rem;
+        }
+    }
+    .cdk-overlay-container, tr.gu-mirror {
+        z-index: 999999999 !important;
+    }
+
+    tr.gu-mirror td{
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    tr.gu-mirror td {
+        height: 2rem !important;
+        width: auto !important;
+    }
+
+    tr.gu-mirror td{
+        min-width: 10rem;
+    }
+}
+.modal-body .dataTable {
+    margin: 0px auto;
+}
+
+.dataTable td, .dataTable th {
+    text-align: center; 
+    vertical-align: middle;
+}
+
+tbody tr:nth-of-type(even){
+    background-color: #efeff4;
+}
+
+tbody tr:hover, tbody tr:nth-of-type(even):hover {
+    background-color: #d2d2d7;
+}
+
+tbody tr.first-row:hover { 
+    background-color: #f9f9fb; 
+}
+
+.table-bordered th, .table-bordered td{
+    border: 1px solid;
+}
+table, th, td {
+    border: 1px solid #c5c5cd94;
+}
+table .submit-user{
+    margin-left: 0.8rem;
+}
+.ng-select{
+    width: 10rem;
+}

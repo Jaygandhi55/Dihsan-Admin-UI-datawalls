@@ -1,0 +1,85 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="fieldForm">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Order Id</label>
+            </div>
+            <div class="col-md-8">
+                <label>{{orderId}}</label>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Supplier<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" placeholder="Select Supplier" formControlName="supplier" (change)="changeSupplier($event)">
+                    <ng-option *ngFor="let option of supplierList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['supplier'].touched && fieldForm.controls['supplier'].errors?.['required']">
+                    Select Supplier.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Designer<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" placeholder="Select Designer" formControlName="designer" (change)="changeDesigner($event)">
+                    <ng-option *ngFor="let option of designerList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['designer'].touched && fieldForm.controls['designer'].errors?.['required']">
+                    Select Designer.
+                </span>
+            </div>
+        </div>
+
+        <div formArrayName="field">
+            <div class="row mt-3" *ngFor="let fieldName of fields().controls; let i=index" [formGroupName]="i">
+          
+                <div class="col-md-4">
+                    <label class="capitalize">{{labelList[i]}}</label>
+                </div>
+                <div class="col-md-5" >
+                    <input type="text" class="form-control" [formControlName]="labelList[i]" />
+                    <!-- <textarea class="form-control" *ngIf="fieldList[i] === 'textarea'" [formControlName]="list[0].fields[i].field"></textarea> -->
+                
+                    <!-- <span class="tx-danger" *ngIf="fieldName?.get(labelList[i])?.touched && fieldName?.get(labelList[i])?.errors?.['required']">
+                        {{labelList[i]}} is require.
+                    </span> -->
+                </div>
+            
+        </div>
+        </div>
+
+        <div class="row mt-3" *ngFor="let node of additionaData">
+            <div class="col-md-4">
+                <label>{{node.label}}</label>
+            </div>
+            <div class="col-md-8">
+                <ace-editor [mode]="'json'" [theme]="'eclipse'" #attributes style="height:100px;border: 1px solid;"></ace-editor>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="submit"
+        [disabled]="!supplierId || !designerId"
+        (click)="updateOrder()"
+        class="btn btn-primary">{{submitBtnName}}</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

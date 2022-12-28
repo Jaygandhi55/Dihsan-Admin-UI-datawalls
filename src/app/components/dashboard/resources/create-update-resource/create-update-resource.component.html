@@ -1,0 +1,150 @@
+<form [formGroup]="resourceForm">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Endpoint<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Endpoint" formControlName="endpoint" (change)="changeResource($event)">
+                    <ng-option *ngFor="let option of endpointList" value="{{option?.id}}">{{option?.endpoint}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="resourceForm.controls['endpoint'].touched && resourceForm.controls['endpoint'].errors?.['required']">
+                    Select Endpoint.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>API Type<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="api-type" class="role-drop" placeholder="Select API Type" formControlName="api_type">
+                    <ng-option *ngFor="let option of api_type" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="resourceForm.controls['api_type'].touched && resourceForm.controls['api_type'].errors?.['required']">
+                    Select API Type.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Resource<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <input class="form-control" autocomplete="off" type="text"
+                formControlName="resource"  placeholder="Enter Resource">
+                <span class="tx-danger" *ngIf="resourceForm.controls['resource'].touched && resourceForm.controls['resource'].errors?.['required']">
+                    Enter Resource.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Method<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="methodList" class="role-drop" placeholder="Select Method" formControlName="method">
+                    <ng-option *ngFor="let option of methodList" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="resourceForm.controls['method'].touched && resourceForm.controls['method'].errors?.['required']">
+                    Select Method.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Content Type<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="content-type" class="role-drop" placeholder="Select Content Type" formControlName="content_type">
+                    <ng-option *ngFor="let option of content_type" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="resourceForm.controls['content_type'].touched && resourceForm.controls['content_type'].errors?.['required']">
+                    Select Content Type.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Keywords<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <textarea class="form-control" formControlName="keywords"  placeholder="Enter Keywords"></textarea>
+                <span class="tx-danger" *ngIf="resourceForm.controls['keywords'].touched && resourceForm.controls['keywords'].errors?.['required']">
+                    Enter Keywords.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Multi</label>
+            </div>
+            <div class="col-md-4">
+                <label class="ckbox mg-b-10"><input type="checkbox"
+                    formControlName="multi"><span class=" ml-2 custom-control-label"></span></label>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Dihsan Website</label>
+            </div>
+            <div class="col-md-4">
+                <label class="ckbox mg-b-10"><input type="checkbox"
+                    formControlName="dihsan_website"><span class=" ml-2 custom-control-label"></span></label>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Attributes<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <ace-editor [mode]="'json'" [theme]="'eclipse'" #attributes style="height:100px;border: 1px solid;"></ace-editor>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Headers<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <ace-editor [mode]="'json'" [theme]="'eclipse'" #headers style="height:100px;border: 1px solid;"></ace-editor>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Body<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-8">
+                <ace-editor [mode]="'json'" [theme]="'eclipse'" #body style="height:100px;border: 1px solid;"></ace-editor>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit"
+        [disabled]="resourceForm.invalid || headers?.text == '' || isJsonString(headers?.text) === false ||
+        attributes?.text == '' || isJsonString(attributes?.text) === false ||
+        body?.text == '' || isJsonString(body?.text) === false"
+        (click)="createUpdateResource()"
+        class="btn btn-primary">{{submitBtnName}}</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

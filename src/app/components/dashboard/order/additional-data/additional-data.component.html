@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="row mt-3" *ngFor="let node of additionaData">
+        <div class="col-md-4">
+            <label>{{node.label}}</label>
+        </div>
+        <div class="col-md-8">
+            <ace-editor [mode]="'json'" [theme]="'eclipse'" #attributes style="height:100px;border: 1px solid;"></ace-editor>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

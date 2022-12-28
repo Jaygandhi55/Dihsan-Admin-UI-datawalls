@@ -1,0 +1,16 @@
+.submit-user{
+    width: 7rem;
+}
+.update-access-rights{
+    width: 12rem;
+}
+::ng-deep {
+    .role-drop.ng-select .ng-select-container{
+        border: 1px solid #92929d !important;
+        border-radius: 5px;
+    }
+
+    .sub-tab label{
+        padding-left: 2rem;
+    }
+}

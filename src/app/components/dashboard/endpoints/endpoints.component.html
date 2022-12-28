@@ -1,0 +1,21 @@
+<app-page-header [title]="'Endpoints'" [items]="['API Configurations']" [active_item]="'Endpoints'"></app-page-header>
+
+<div class="row">
+    <div class="col-12 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{'Endpoints List'}}</h4>
+            </div>
+            <div *ngIf="data" class="mg-r-15">
+                <button (click)="createEndpoint()" type="button"
+                    class="btn btn-primary action-icon-button button-icon">Create Endpoint</button>
+            </div>
+            <app-table-data *ngIf="data" [pageTitle]="'Endpoints List'" [createEndpointBtn]="access?.write"
+                [columns]="columns" [page]="page" (pageEvent)="pageChange($event)" [pagination_data]="pagination_data"
+                (actionEvent)="actionEvent($event)" [actionHtml]="actionHtml" [showFilter]="true" [data]="data"
+                #tableData></app-table-data>
+        </div>
+    </div>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

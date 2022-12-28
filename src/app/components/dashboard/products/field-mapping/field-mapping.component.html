@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="lock-button mt-2 mb-3">
+        <button type="button" *ngIf="list[0]?.status !== 'live' && list[0]?.status !== 'live_ready'" (mouseover)="changeIcon=true" (mouseout)="changeIcon=false" ngbTooltip="Lock Content" class="btn btn-primary-light download-all" (click)="lockContent()">
+            <i class="{{changeIcon ? 'fa fa-lock' : 'fa fa-unlock'}}"></i>
+        </button>
+    </div>
+    <form [formGroup]="fieldForm" style="clear: both;">
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Supplier<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" placeholder="Select Supplier" formControlName="supplier" (change)="changeSupplier($event)">
+                    <ng-option *ngFor="let option of supplierList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['supplier'].touched && fieldForm.controls['supplier'].errors?.['required']">
+                    Select Supplier.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Designer<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" placeholder="Select Designer" formControlName="designer" (change)="changeDesigner($event)">
+                    <ng-option *ngFor="let option of designerList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['designer'].touched && fieldForm.controls['designer'].errors?.['required']">
+                    Select Designer.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Category<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" [multiple]="true" placeholder="Select Category" formControlName="category" (change)="changeCategory($event)">
+                    <ng-option *ngFor="let option of categoryList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['category'].touched && fieldForm.controls['category'].errors?.['required']">
+                    Select Category.
+                </span>
+            </div>
+        </div>
+
+        <!-- <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Sub Category<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-4">
+                <ng-select id="role" class="role-drop" placeholder="Select Supplier" formControlName="subcategory" (change)="changeSubcategory($event)">
+                    <ng-option *ngFor="let option of subCategoryList" value="{{option?.id}}">{{option?.text}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="fieldForm.controls['subcategory'].touched && fieldForm.controls['subcategory'].errors?.['required']">
+                    Select Sub Category.
+                </span>
+            </div>
+        </div> -->
+
+        <div formArrayName="field">
+            <div class="row mt-3" *ngFor="let fieldName of fields().controls; let i=index" [formGroupName]="i">
+          
+                <div class="col-md-4">
+                    <label class="capitalize">{{labelList[i]}}<span class="tx-danger">{{mandatoryList[i] ? '*' : ''}}</span></label>
+                </div>
+                <div class="col-md-5" [class.col-md-8]="fieldList[i] === 'textarea'">
+                    <input type="{{fieldList[i]}}" *ngIf="fieldList[i] !== 'textarea'" [class.form-control]="fieldList[i] !== 'checkbox'" [formControlName]="labelList[i]" />
+                    <!-- <textarea class="form-control" *ngIf="fieldList[i] === 'textarea'" [formControlName]="list[0].fields[i].field"></textarea> -->
+                    <ckeditor [editor]="Editor" *ngIf="fieldList[i] === 'textarea'" [formControlName]="labelList[i]" skin="moono-lisa" language="en"
+                    (ready)="onReady($event)"></ckeditor>
+
+                    <span class="tx-danger" *ngIf="fieldName?.get(labelList[i])?.touched && fieldName?.get(labelList[i])?.errors?.['required']">
+                        {{labelList[i]}} is require.
+                    </span>
+                </div>
+            
+        </div>
+        </div>
+        
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="submit"
+        [disabled]="fieldForm?.invalid"
+        (click)="updateFieldMapping()"
+        class="btn btn-primary">{{submitBtnName}}</button>
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+
+<app-loader *ngIf="spinner"></app-loader>

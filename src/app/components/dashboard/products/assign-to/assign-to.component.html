@@ -1,0 +1,53 @@
+<form [formGroup]="assignForm">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close fe fe-x" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row mt-3 mb-5">
+            <div class="col-md-12">
+                <h5>You have selected {{count}} {{count <= 1 ? 'product' : 'products'}}</h5>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Assign To<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Assign To" formControlName="assignTeam" (change)="changeTeam($event)">
+                    <ng-option *ngFor="let option of assignTeams" value="{{option}}">{{option}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="assignForm.controls['assignTeam'].touched && assignForm.controls['assignTeam'].errors?.['required']">
+                    Select Assign To.
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <label>Team Member<span class="tx-danger">*</span></label>
+            </div>
+            <div class="col-md-6">
+                <ng-select id="role" class="role-drop" placeholder="Select Team Member" formControlName="teamMember">
+                    <ng-option *ngFor="let option of teamMembers" value="{{option.id}}">{{option.first_name}} {{option.last_name}}</ng-option>
+                </ng-select>
+                <span class="tx-danger" *ngIf="assignForm.controls['teamMember'].touched && assignForm.controls['teamMember'].errors?.['required']">
+                    Select Team Member.
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="assignForm?.invalid"
+        (click)="submitAssignTo()"
+        class="btn btn-primary">{{submitBtnName}}</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+    </div>
+</form>
+
+<app-loader *ngIf="spinner"></app-loader>

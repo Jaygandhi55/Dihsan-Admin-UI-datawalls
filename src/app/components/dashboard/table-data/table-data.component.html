@@ -1,0 +1,22 @@
+            <div class="row">
+                <div class="col-md-4">
+                    <input *ngIf="config?.filtering && showFilter" placeholder="Filter all columns"
+                        (input)="onSearchChange($event)" class="main-filter form-control" />
+                </div>
+            </div>
+            <br>
+            <div class="card-body pt-0 example1-table">
+                <div class="table-responsive">
+
+                    <ng-table #ngTable class="order-table" [selectable]="selectable" [config]="config" (tableChanged)="onChangeTable(config)"
+                        *ngIf="showSearch" (cellClicked)="onCellClick($event)" (actionClicked)="onActionClick($event)"
+                        (filterEvt)="filterEmit($event)" [actionHtml]="actionHtml" [rows]="rows" [columns]="columns">
+                    </ng-table>
+
+                </div>
+            </div>
+            <pagination *ngIf="config.paging && length > itemsPerPage" class="pagination-sm" [(ngModel)]="page"
+                [totalItems]="length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
+                [rotate]="false" (pageChanged)="onChangeTable(config, $event); scrollTop()"
+                (numPages)="numPages = $event">
+            </pagination> <label *ngIf="config.paging && length > itemsPerPage" class="number-records">Showing {{(itemsPerPage * (page - 1)) + 1}} to {{(itemsPerPage * page) > length ? length : itemsPerPage * page}} of {{length}} Items</label>

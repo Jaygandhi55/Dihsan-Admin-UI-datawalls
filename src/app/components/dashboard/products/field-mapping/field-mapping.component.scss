@@ -1,0 +1,25 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.lock-button{
+    float: right;
+}
+
+.submit-user{
+    width: 5rem;
+    color: #f9f9fb;
+    text-decoration: none;
+    background-color: #38cab3;
+    color: #fff;
+    border-radius: 0.3rem;
+}
+.capitalize{
+    text-transform: capitalize;
+}
